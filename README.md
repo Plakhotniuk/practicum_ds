@@ -3,4 +3,5 @@
 Проекты:
 
 - [SQL. Анализ данных и решение ad hoc задач](sql_ad_hoc/readme.md)
+- [SQL. Разработка витрины и решение ad-hoc задач](data_mart/readme.md)
 - 
