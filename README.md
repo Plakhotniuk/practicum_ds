@@ -2,8 +2,8 @@
 
 Проекты:
 
-- [SQL. Анализ данных и решение ad hoc задач](sql_ad_hoc/readme.md)
-- [SQL. Разработка витрины и решение ad-hoc задач](data_mart/readme.md)
-- [Python. Предобработка данных](python_data_preprocessing/readme.md)
-- [Python. Исследовательский анализ данных. Рынок общественного питания Москвы](exploratory_data_analysis/readme.md)
-- [Python. Анализ целевой переменной. Анализ лояльности пользователей Яндекс Афиши](target_variable_analysis/project.ipynb)
+- [Разработка витрины и решение ad-hoc задач. SQL.](sql_ad_hoc/data_mart/readme.md)
+- [Анализ данных и решение ad hoc задач. SQL.](sql_ad_hoc/research_data_analysis/readme.md)
+- [Предобработка данных на Python.](python_data_analysis/python_data_preprocessing/project.ipynb)
+- [Исследовательский анализ данных на Python. Рынок общественного питания Москвы](python_data_analysis/exploratory_data_analysis/project.ipynb)
+- [Анализ целевой переменной на Python. Анализ лояльности пользователей Яндекс Афиши](python_data_analysis/target_variable_analysis/project.ipynb)
