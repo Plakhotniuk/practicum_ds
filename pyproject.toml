@@ -6,9 +6,11 @@ readme = "README.md"
 requires-python = "==3.9.*"
 dependencies = [
     "category-encoders>=2.6.4",
+    "imblearn>=0.0",
     "ipykernel>=6.31.0",
     "jupyter>=1.1.1",
     "matplotlib>=3.9.4",
+    "mlxtend>=0.23.4",
     "numpy>=2.0.2",
     "optuna>=4.8.0",
     "pandas>=2.3.3",
