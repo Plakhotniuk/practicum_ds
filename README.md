@@ -17,4 +17,5 @@
 - [Многоклассовая классификация. Модель предсказания возрастной категории пользователей интернет сервисов](ml/multiclass_classification/project.ipynb)
 - [Решающее дерево. Прогнозирование спроса на велопрокат](ml/decision_tree/project.ipynb)
 - [Случайный лес. Модель поведенческого скринга для прогноза просрочек по кредитам](ml/random_forest/project.ipynb)
-- [Градиентный бустинг. Модель оценки стоимости автомобилей](ml/grad_boosting/project/project.ipynb)
+- [Градиентный бустинг. Модель оценки стоимости автомобилей](ml/grad_boosting/projects/project.ipynb)
+- [Модель предсказания отмены бронирования номеров в отеле](ml/grad_boosting/projects/hotel_booking_cancellation.ipynb)

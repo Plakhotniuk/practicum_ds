@@ -7,6 +7,7 @@ requires-python = "==3.9.*"
 dependencies = [
     "catboost>=1.2.10",
     "category-encoders>=2.6.4",
+    "dotenv>=0.9.9",
     "imblearn>=0.0",
     "ipykernel>=6.31.0",
     "jupyter>=1.1.1",
