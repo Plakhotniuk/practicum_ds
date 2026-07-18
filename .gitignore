@@ -208,3 +208,5 @@ __marimo__/
 
 *.joblib
 *.pkl 
+
+catboost_info
