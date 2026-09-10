@@ -19,3 +19,6 @@
 - [Случайный лес. Модель поведенческого скринга для прогноза просрочек по кредитам](ml/random_forest/project.ipynb)
 - [Градиентный бустинг. Модель оценки стоимости автомобилей](ml/grad_boosting/projects/car_pricing.ipynb)
 - [Градиентный бустинг. Модель предсказания отмены бронирования номеров в отеле](ml/grad_boosting/projects/hotel_booking.ipynb)
+
+Проверка статистических гипотез:
+- [A/B-тестирование нового алгоритма рекомендаций контента](hypothesis_testing/advertisement_app.ipynb)
