@@ -20,5 +20,8 @@
 - [Градиентный бустинг. Модель оценки стоимости автомобилей](ml/grad_boosting/projects/car_pricing.ipynb)
 - [Градиентный бустинг. Модель предсказания отмены бронирования номеров в отеле](ml/grad_boosting/projects/hotel_booking.ipynb)
 
+Мониторинг моделей:
+- [Airflow DAG для платформы интернет-торговли](https://github.com/Plakhotniuk/OnlineTradingAirflowDAG)
+
 Проверка статистических гипотез:
 - [A/B-тестирование нового алгоритма рекомендаций контента](hypothesis_testing/advertisement_app.ipynb)
