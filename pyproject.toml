@@ -34,4 +34,5 @@ dependencies = [
     "google-re2<1.1",
     "s3fs>=2025.10.0",
     "boto3>=1.41.5",
+    "pyspark==3.5.9",
 ]
