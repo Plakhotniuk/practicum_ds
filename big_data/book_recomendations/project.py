@@ -11,7 +11,7 @@
       --columns usage_platform_ru genre \
       --audition_path s3a://s3-ds-source/audition.parquet \
       --content_path s3a://s3-ds-source/content.parquet \
-      --output_path s3a://<bucket>/results/S24_project_data
+      --output_path s3a://s3-ds-20260726-c5944c8601/results/S24_project_data
 """
 
 import argparse
@@ -47,6 +47,7 @@ def parse_iso_date(value: str) -> date:
 
 
 def parse_args(args: Iterable[str] = None) -> argparse.Namespace:
+    """Парсинг аргементов командной строки с проверками формата вводимых переменных"""
     parser = argparse.ArgumentParser(
         description="Построение пяти витрин для рекомендательной системы книг."
     )
@@ -57,10 +58,6 @@ def parse_args(args: Iterable[str] = None) -> argparse.Namespace:
         "--columns",
         required=True,
         nargs="+",
-        help=(
-            "Колонки для расчёта распределений. Можно передать через пробел "
-            "или через запятую, например: usage_platform_ru genre"
-        ),
     )
     parser.add_argument("--audition_path", required=True)
     parser.add_argument("--content_path", required=True)
@@ -70,22 +67,11 @@ def parse_args(args: Iterable[str] = None) -> argparse.Namespace:
     if parsed_args.start_date > parsed_args.end_date:
         parser.error("start_date не может быть позже end_date")
 
-    parsed_args.columns = normalize_columns(parsed_args.columns)
-    if not parsed_args.columns:
-        parser.error("columns должен содержать хотя бы одну колонку")
     return parsed_args
 
 
-def normalize_columns(columns: Iterable[str]) -> List[str]:
-    """Поддерживает передачу колонок как через пробел, так и через запятую."""
-    normalized = []
-    for value in columns:
-        normalized.extend(column.strip() for column in value.split(","))
-    return list(dict.fromkeys(column for column in normalized if column))
-
-
 def create_spark_session() -> SparkSession:
-    """Создаёт Spark-сессию; master и ресурсы задаются через spark-submit."""
+    """Создание Spark-сессии."""
     builder = (
         SparkSession.builder.appName("book_recommendations_marts")
         .config("spark.hadoop.fs.s3a.endpoint", "https://storage.yandexcloud.net")
@@ -96,15 +82,14 @@ def create_spark_session() -> SparkSession:
 
     access_key = os.environ.get("S3_ACCESS_KEY")
     secret_key = os.environ.get("S3_SECRET_KEY")
-    if bool(access_key) != bool(secret_key):
+    if access_key is None or secret_key is None:
         raise ValueError(
             "S3_ACCESS_KEY и S3_SECRET_KEY должны быть заданы одновременно"
         )
-    if access_key and secret_key:
-        builder = (
-            builder.config("spark.hadoop.fs.s3a.access.key", access_key)
-            .config("spark.hadoop.fs.s3a.secret.key", secret_key)
-        )
+    builder = (
+        builder.config("spark.hadoop.fs.s3a.access.key", access_key)
+        .config("spark.hadoop.fs.s3a.secret.key", secret_key)
+    )
 
     return builder.getOrCreate()
 
@@ -118,6 +103,8 @@ def read_and_prepare_data(
     geo_id: str,
 ) -> DataFrame:
     """Читает, очищает, объединяет и фильтрует исходные данные."""
+    # преобразование формата: строки -> даты
+    # фильтрация аномалий: длительность сессий
     audition = (
         spark.read.parquet(audition_path)
         .withColumn(
@@ -133,18 +120,17 @@ def read_and_prepare_data(
         .filter(F.col("main_content_duration_hours") <= 24)
     )
 
+    # объединение датасетов
+    # - сплит строковых значений в published_topic_title_list
+    # - фильтрация по датам и геопозиции
     prepared = (
         audition.join(content, on="main_content_id", how="left")
         .withColumn(
             "published_topic_title_list",
             F.split(
-                F.regexp_replace(
-                    "published_topic_title_list",
-                    r"^\['|'\]$",
-                    "",
-                ),
-                r"',\s*'",
-            ),
+                F.regexp_replace("published_topic_title_list", r"^\['|'\]$", ""),
+                r"',\s*'"
+            )
         )
         .filter(
             F.col("msk_business_dt").between(
