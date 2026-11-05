@@ -47,7 +47,7 @@ def parse_iso_date(value: str) -> date:
 
 
 def parse_args(args: Iterable[str] = None) -> argparse.Namespace:
-    """Парсинг аргементов командной строки с проверками формата вводимых переменных"""
+    """Парсинг аргументов командной строки с проверками формата вводимых переменных"""
     parser = argparse.ArgumentParser(
         description="Построение пяти витрин для рекомендательной системы книг."
     )
@@ -74,9 +74,11 @@ def create_spark_session() -> SparkSession:
     """Создание Spark-сессии."""
     builder = (
         SparkSession.builder.appName("book_recommendations_marts")
+        # настройки Hadoop S3A
         .config("spark.hadoop.fs.s3a.endpoint", "https://storage.yandexcloud.net")
         .config("spark.hadoop.fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem")
         .config("spark.hadoop.fs.s3a.path.style.access", "true")
+        # настройки Spark SQL
         .config("spark.sql.adaptive.enabled", "true")
     )
 
@@ -102,9 +104,21 @@ def read_and_prepare_data(
     end_date: date,
     geo_id: str,
 ) -> DataFrame:
-    """Читает, очищает, объединяет и фильтрует исходные данные."""
+    """Читает, очищает, объединяет и фильтрует исходные данные.
+    
+    Args:
+        spark (SparkSession): активная Spark-сессия
+        audition_path (str): путь к датасету audition
+        content_path (str): путь к датасету content
+        start_date (date): дата начала рассматриваемого периода 
+        end_date (date): дата конца рассматриваемого периода
+        geo_id (str): id рассматриваемый регион
+    """
     # преобразование формата: строки -> даты
-    # фильтрация аномалий: длительность сессий
+    # фильтрация аномалий: 
+    # - длительность сессий от 0 до 24ч, 
+    # - длительность контента >=0
+    # чистка от дублей
     audition = (
         spark.read.parquet(audition_path)
         .withColumn(
@@ -112,12 +126,14 @@ def read_and_prepare_data(
             F.to_date("msk_business_dt_str", "yyyy-MM-dd"),
         )
         .drop("msk_business_dt_str")
-        .filter((F.col("hours") <= 24) & (F.col("hours_sessions_long") <= 24))
+        .filter((F.col("hours").between(0, 24)) & (F.col("hours_sessions_long").between(0, 24)))
+        .dropDuplicates()
     )
     content = (
         spark.read.parquet(content_path)
         .filter(F.col("main_content_duration_hours").isNotNull())
-        .filter(F.col("main_content_duration_hours") <= 24)
+        .filter(F.col("main_content_duration_hours") >= 0)
+        .dropDuplicates()
     )
 
     # объединение датасетов
@@ -161,7 +177,8 @@ def build_all_marts(df: DataFrame) -> Dict[str, DataFrame]:
         )
         .withColumn(
             "finished_percent",
-            F.col("total_hours") / F.col("content_duration_hours") * 100,
+            # приведение к диапазону [0, 100] %
+            F.least(F.lit(1.0), F.greatest(F.lit(0.0), F.col("total_hours") / F.col("content_duration_hours"))) * 100,
         )
         .withColumn(
             "is_completed",
@@ -259,7 +276,7 @@ def build_all_marts(df: DataFrame) -> Dict[str, DataFrame]:
         ).alias("kids_content_count"),
     )
     user_completion = user_content_mart.groupBy("puid").agg(
-        F.avg("finished_percent").alias("completion_rate")
+        F.avg("is_completed").alias("completion_rate")  # доля завершенных произведений от 0 до 1
     )
     user_genres = user_genre_mart.groupBy("puid").agg(
         F.countDistinct("genre").alias("unique_genres_count")
