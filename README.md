@@ -26,3 +26,6 @@
 
 Проверка статистических гипотез:
 - [A/B-тестирование нового алгоритма рекомендаций контента](hypothesis_testing/advertisement_app.ipynb)
+
+Обработка больших данных:
+- [PySpark. ETL-пайплайн для построения витрин книжных рекомендаций](big_data/book_recomendations/project_report.md)
