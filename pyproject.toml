@@ -36,4 +36,5 @@ dependencies = [
     "boto3>=1.41.5",
     "pyspark==3.5.9",
     "mlflow==3.6.0",
+    "torch>=2.14.1",
 ]
