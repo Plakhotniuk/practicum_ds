@@ -3,7 +3,7 @@ name = "practicum-ds"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-requires-python = "==3.9.5"
+requires-python = "==3.10.*"
 dependencies = [
     "catboost>=1.2.10",
     "category-encoders>=2.6.4",
@@ -30,6 +30,11 @@ dependencies = [
     "statsmodels>=0.14.6",
     "urllib3<2",
     "xgboost>=2.1.4",
-    "apache-airflow[celery,crypto,postgres]==2.9.1",
+    "apache-airflow==2.10.1",
     "google-re2<1.1",
+    "s3fs>=2025.10.0",
+    "boto3>=1.41.5",
+    "pyspark==3.5.9",
+    "mlflow==3.6.0",
+    "torch>=2.14.1",
 ]

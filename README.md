@@ -11,11 +11,21 @@
 
 
 Машинное обучение:
-- [Линейная регрессия. Модель для предсказания массы морских черепах](ml/linear_regression/project.ipynb)
-- [Логистическая регрессия. Модель прогнозирования оттока клиентов](ml/log_regression/project.ipynb)
-- [Метод опорных векторов. Модель предсказания вероятности клика (CTR) на рекламу](ml/svm/project.ipynb)
-- [Многоклассовая классификация. Модель предсказания возрастной категории пользователей интернет сервисов](ml/multiclass_classification/project.ipynb)
-- [Решающее дерево. Прогнозирование спроса на велопрокат](ml/decision_tree/project.ipynb)
-- [Случайный лес. Модель поведенческого скринга для прогноза просрочек по кредитам](ml/random_forest/project.ipynb)
-- [Градиентный бустинг. Модель оценки стоимости автомобилей](ml/grad_boosting/projects/car_pricing.ipynb)
-- [Градиентный бустинг. Модель предсказания отмены бронирования номеров в отеле](ml/grad_boosting/projects/hotel_booking.ipynb)
+- [Линейная регрессия. Модель для предсказания массы морских черепах](ml/supervised_learning/linear_regression/project.ipynb)
+- [Логистическая регрессия. Модель прогнозирования оттока клиентов](ml/supervised_learning/log_regression/project.ipynb)
+- [Метод опорных векторов. Модель предсказания вероятности клика (CTR) на рекламу](ml/supervised_learning/svm/project.ipynb)
+- [Многоклассовая классификация. Модель предсказания возрастной категории пользователей интернет сервисов](ml/supervised_learning/multiclass_classification/project.ipynb)
+- [Модель оценки рисков задержки доставки](ml/unsupervised_learning/project/orders_cancellations.ipynb)
+- [Решающее дерево. Прогнозирование спроса на велопрокат](ml/supervised_learning/decision_tree/project.ipynb)
+- [Случайный лес. Модель поведенческого скринга для прогноза просрочек по кредитам](ml/supervised_learning/random_forest/project.ipynb)
+- [Градиентный бустинг. Модель оценки стоимости автомобилей](ml/supervised_learning/grad_boosting/projects/car_pricing.ipynb)
+- [Градиентный бустинг. Модель предсказания отмены бронирования номеров в отеле](ml/supervised_learning/grad_boosting/projects/hotel_booking.ipynb)
+
+Мониторинг моделей:
+- [Airflow DAG для платформы интернет-торговли](https://github.com/Plakhotniuk/OnlineTradingAirflowDAG)
+
+Проверка статистических гипотез:
+- [A/B-тестирование нового алгоритма рекомендаций контента](hypothesis_testing/advertisement_app.ipynb)
+
+Обработка больших данных:
+- [PySpark. ETL-пайплайн для построения витрин книжных рекомендаций](big_data/book_recomendations/project_report.md)
