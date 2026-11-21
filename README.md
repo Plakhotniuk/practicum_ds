@@ -20,6 +20,7 @@
 - [Случайный лес. Модель поведенческого скринга для прогноза просрочек по кредитам](ml/supervised_learning/random_forest/project.ipynb)
 - [Градиентный бустинг. Модель оценки стоимости автомобилей](ml/supervised_learning/grad_boosting/projects/car_pricing.ipynb)
 - [Градиентный бустинг. Модель предсказания отмены бронирования номеров в отеле](ml/supervised_learning/grad_boosting/projects/hotel_booking.ipynb)
+- [Нейростети для обработки текстовых данных. Модель определения тональности отзывов](ml_neural_networks/youmap_project/project.ipynb)
 
 Мониторинг моделей:
 - [Airflow DAG для платформы интернет-торговли](https://github.com/Plakhotniuk/OnlineTradingAirflowDAG)
