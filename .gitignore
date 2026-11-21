@@ -211,3 +211,5 @@ __marimo__/
 
 catboost_info
 *.infra*
+
+*.pt
